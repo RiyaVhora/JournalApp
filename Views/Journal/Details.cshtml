@@ -1,0 +1,82 @@
+@model JournalApp.Models.JournalEntry
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0">@Model.Title</h2>
+                    <div>
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar"></i> Created: @Model.CreatedAt.ToString("MMMM dd, yyyy 'at' h:mm tt")
+                            </small>
+                        </div>
+                        @if (Model.UpdatedAt.HasValue)
+                        {
+                            <div class="col-md-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-edit"></i> Updated: @Model.UpdatedAt.Value.ToString("MMMM dd, yyyy 'at' h:mm tt")
+                                </small>
+                            </div>
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.Mood))
+                    {
+                        <div class="mb-3">
+                            <span class="badge bg-info">
+                                <i class="fas fa-smile"></i> Mood: @Model.Mood
+                            </span>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Location))
+                    {
+                        <div class="mb-3">
+                            <span class="badge bg-secondary">
+                                <i class="fas fa-map-marker-alt"></i> @Model.Location
+                            </span>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Weather))
+                    {
+                        <div class="mb-3">
+                            <span class="badge bg-primary">
+                                <i class="fas fa-cloud-sun"></i> @Model.Weather
+                            </span>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Tags))
+                    {
+                        <div class="mb-3">
+                            @foreach (var tag in Model.GetTagsList())
+                            {
+                                <span class="badge bg-light text-dark me-1">#@tag</span>
+                            }
+                        </div>
+                    }
+
+                    <div class="content">
+                        @Html.Raw(Model.Content.Replace("\n", "<br/>"))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Journal
+        </a>
+    </div>
+</div>
+

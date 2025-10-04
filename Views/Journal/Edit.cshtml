@@ -1,0 +1,89 @@
+@model JournalApp.Models.JournalEntry
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Edit Journal Entry</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CreatedAt" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Title" class="form-label">Title *</label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Mood" class="form-label">Mood</label>
+                                <select asp-for="Mood" class="form-select">
+                                    <option value="">Select mood...</option>
+                                    <option value="😊 Happy">😊 Happy</option>
+                                    <option value="😔 Sad">😔 Sad</option>
+                                    <option value="😌 Calm">😌 Calm</option>
+                                    <option value="😤 Angry">😤 Angry</option>
+                                    <option value="😰 Anxious">😰 Anxious</option>
+                                    <option value="😴 Tired">😴 Tired</option>
+                                    <option value="🤔 Thoughtful">🤔 Thoughtful</option>
+                                    <option value="😍 Excited">😍 Excited</option>
+                                    <option value="😌 Content">😌 Content</option>
+                                    <option value="😕 Confused">😕 Confused</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Weather" class="form-label">Weather</label>
+                                <select asp-for="Weather" class="form-select">
+                                    <option value="">Select weather...</option>
+                                    <option value="☀️ Sunny">☀️ Sunny</option>
+                                    <option value="⛅ Partly Cloudy">⛅ Partly Cloudy</option>
+                                    <option value="☁️ Cloudy">☁️ Cloudy</option>
+                                    <option value="🌧️ Rainy">🌧️ Rainy</option>
+                                    <option value="⛈️ Stormy">⛈️ Stormy</option>
+                                    <option value="❄️ Snowy">❄️ Snowy</option>
+                                    <option value="🌤️ Clear">🌤️ Clear</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Location" class="form-label">Location</label>
+                            <input asp-for="Location" class="form-control" placeholder="Where are you?" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Tags" class="form-label">Tags</label>
+                            <input asp-for="Tags" class="form-control" placeholder="Enter tags separated by commas (e.g., work, family, travel)" />
+                            <small class="form-text text-muted">Separate multiple tags with commas</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Content" class="form-label">Content *</label>
+                            <textarea asp-for="Content" class="form-control" rows="10" placeholder="What's on your mind?"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

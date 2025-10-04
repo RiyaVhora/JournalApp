@@ -1,0 +1,225 @@
+﻿@model IEnumerable<JournalApp.Models.JournalEntry>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1><i class="fas fa-book"></i> My Journal</h1>
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> New Entry
+                </a>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-4">
+                            <label for="searchString" class="form-label">Search</label>
+                            <input type="text" name="searchString" class="form-control" 
+                                   value="@ViewBag.SearchString" placeholder="Search title, content, or location...">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="moodFilter" class="form-label">Mood</label>
+                            <select name="moodFilter" class="form-select">
+                                <option value="">All Moods</option>
+                                @if (ViewBag.MoodFilter == "😊 Happy")
+                                {
+                                    <option value="😊 Happy" selected>😊 Happy</option>
+                                }
+                                else
+                                {
+                                    <option value="😊 Happy">😊 Happy</option>
+                                }
+                                @if (ViewBag.MoodFilter == "😔 Sad")
+                                {
+                                    <option value="😔 Sad" selected>😔 Sad</option>
+                                }
+                                else
+                                {
+                                    <option value="😔 Sad">😔 Sad</option>
+                                }
+                                @if (ViewBag.MoodFilter == "😌 Calm")
+                                {
+                                    <option value="😌 Calm" selected>😌 Calm</option>
+                                }
+                                else
+                                {
+                                    <option value="😌 Calm">😌 Calm</option>
+                                }
+                                @if (ViewBag.MoodFilter == "😤 Angry")
+                                {
+                                    <option value="😤 Angry" selected>😤 Angry</option>
+                                }
+                                else
+                                {
+                                    <option value="😤 Angry">😤 Angry</option>
+                                }
+                                @if (ViewBag.MoodFilter == "😰 Anxious")
+                                {
+                                    <option value="😰 Anxious" selected>😰 Anxious</option>
+                                }
+                                else
+                                {
+                                    <option value="😰 Anxious">😰 Anxious</option>
+                                }
+                                @if (ViewBag.MoodFilter == "😴 Tired")
+                                {
+                                    <option value="😴 Tired" selected>😴 Tired</option>
+                                }
+                                else
+                                {
+                                    <option value="😴 Tired">😴 Tired</option>
+                                }
+                                @if (ViewBag.MoodFilter == "🤔 Thoughtful")
+                                {
+                                    <option value="🤔 Thoughtful" selected>🤔 Thoughtful</option>
+                                }
+                                else
+                                {
+                                    <option value="🤔 Thoughtful">🤔 Thoughtful</option>
+                                }
+                                @if (ViewBag.MoodFilter == "😍 Excited")
+                                {
+                                    <option value="😍 Excited" selected>😍 Excited</option>
+                                }
+                                else
+                                {
+                                    <option value="😍 Excited">😍 Excited</option>
+                                }
+                                @if (ViewBag.MoodFilter == "😌 Content")
+                                {
+                                    <option value="😌 Content" selected>😌 Content</option>
+                                }
+                                else
+                                {
+                                    <option value="😌 Content">😌 Content</option>
+                                }
+                                @if (ViewBag.MoodFilter == "😕 Confused")
+                                {
+                                    <option value="😕 Confused" selected>😕 Confused</option>
+                                }
+                                else
+                                {
+                                    <option value="😕 Confused">😕 Confused</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="tagFilter" class="form-label">Tag</label>
+                            <input type="text" name="tagFilter" class="form-control" 
+                                   value="@ViewBag.TagFilter" placeholder="Filter by tag...">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="fas fa-times"></i> Clear
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Journal Entries -->
+            @if (Model.Any())
+            {
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-start">
+                                    <h5 class="card-title mb-0">@item.Title</h5>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" 
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" asp-action="Details" asp-route-id="@item.Id">
+                                                <i class="fas fa-eye"></i> View
+                                            </a></li>
+                                            <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item text-danger" asp-action="Delete" asp-route-id="@item.Id">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar"></i> @item.CreatedAt.ToString("MMM dd, yyyy 'at' h:mm tt")
+                                        </small>
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(item.Mood))
+                                    {
+                                        <div class="mb-2">
+                                            <span class="badge bg-info">@item.Mood</span>
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(item.Location))
+                                    {
+                                        <div class="mb-2">
+                                            <span class="badge bg-secondary">
+                                                <i class="fas fa-map-marker-alt"></i> @item.Location
+                                            </span>
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(item.Tags))
+                                    {
+                                        <div class="mb-2">
+                                            @foreach (var tag in item.GetTagsList().Take(3))
+                                            {
+                                                <span class="badge bg-light text-dark me-1">#@tag</span>
+                                            }
+                                            @if (item.GetTagsList().Count > 3)
+                                            {
+                                                <span class="text-muted">+@(item.GetTagsList().Count - 3) more</span>
+                                            }
+                                        </div>
+                                    }
+
+                                    <p class="card-text">
+                                        @if (item.Content.Length > 100)
+                                        {
+                                            @item.Content.Substring(0, 100)<text>...</text>
+                                        }
+                                        else
+                                        {
+                                            @item.Content
+                                        }
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-eye"></i> Read More
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
+                    <h3 class="text-muted">No journal entries found</h3>
+                    <p class="text-muted">Start your journaling journey by creating your first entry!</p>
+                    <a asp-action="Create" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create Your First Entry
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
