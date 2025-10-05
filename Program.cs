@@ -6,9 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services
 builder.Services.AddControllersWithViews();
 
-// This is the NEW line for PostgreSQL
+// Use SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
